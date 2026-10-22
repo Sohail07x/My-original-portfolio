@@ -29,11 +29,27 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenContact }) =
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         video.play().catch(() => {});
       });
+      hls.on(Hls.Events.ERROR, (_event, data) => {
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              hls?.startLoad();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              hls?.recoverMediaError();
+              break;
+            default:
+              hls?.destroy();
+              break;
+          }
+        }
+      });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = HLS_VIDEO_URL;
       video.addEventListener('loadedmetadata', () => {
         video.play().catch(() => {});
       });
+      video.addEventListener('error', () => {});
     }
 
     return () => {

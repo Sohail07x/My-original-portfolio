@@ -12,7 +12,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   const [wordIndex, setWordIndex] = useState<number>(0);
   const [isExiting, setIsExiting] = useState<boolean>(false);
 
-  // Counter using requestAnimationFrame over 2700ms
+  // Counter using requestAnimationFrame over 2700ms with fail-safe timer
   useEffect(() => {
     let startTimestamp: number | null = null;
     const duration = 2700;
@@ -43,8 +43,18 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
     animationFrameId = requestAnimationFrame(step);
 
+    // Hard fail-safe: Ensure loading screen NEVER stays stuck even if tab is in background or rAF is throttled
+    const safetyTimer = setTimeout(() => {
+      setCount(100);
+      setIsExiting(true);
+      setTimeout(() => {
+        onComplete();
+      }, 500);
+    }, 3400);
+
     return () => {
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(safetyTimer);
     };
   }, [onComplete]);
 
