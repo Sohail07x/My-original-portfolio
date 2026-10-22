@@ -124,11 +124,23 @@
   background-size: 4px 4px;
 }
 
-/* Smooth scrolling */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Smooth scrolling and touch optimizations */
 html {
   scroll-behavior: smooth;
   background-color: hsl(var(--bg));
   color: hsl(var(--text));
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -138,4 +150,12 @@ body {
   background-color: hsl(var(--bg));
   color: hsl(var(--text));
   font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Ensure images never cause overflow */
+img, video {
+  max-width: 100%;
+  height: auto;
 }

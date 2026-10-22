@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PROJECTS } from '../data/portfolioData';
+import { PROJECTS, USER_INFO } from '../data/portfolioData';
 import { Project } from '../types';
 
 interface SelectedWorksProps {
@@ -10,37 +10,36 @@ interface SelectedWorksProps {
 
 export const SelectedWorks: React.FC<SelectedWorksProps> = ({
   onSelectProject,
-  onViewAllWork,
 }) => {
   const [isViewAllHovered, setIsViewAllHovered] = useState(false);
 
   return (
     <section id="work" className="bg-bg py-16 md:py-24 relative border-t border-stroke/40">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8 md:px-10 lg:px-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 md:mb-16 gap-6"
         >
           <div>
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
               <span className="w-8 h-px bg-stroke" />
               <span className="text-xs text-muted uppercase tracking-[0.3em] font-medium">
                 Applied Engineering
               </span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-text-primary tracking-tight font-normal">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-text-primary tracking-tight font-normal">
               Featured{' '}
               <span className="font-display italic font-normal text-text-primary">
                 projects
               </span>
             </h2>
 
-            <p className="text-sm md:text-base text-muted mt-3 max-w-lg font-light">
+            <p className="text-xs sm:text-sm md:text-base text-muted mt-2 sm:mt-3 max-w-lg font-light">
               Practical prototypes, machine learning experiments, and web architectures
               demonstrating hands-on technical execution.
             </p>
@@ -48,7 +47,7 @@ export const SelectedWorks: React.FC<SelectedWorksProps> = ({
 
           {/* "View all work" button */}
           <div
-            className="hidden md:inline-flex relative rounded-full p-[2px] transition-transform duration-300 hover:scale-105 shrink-0"
+            className="self-start md:self-auto relative rounded-full p-[2px] transition-transform duration-300 hover:scale-105 shrink-0"
             onMouseEnter={() => setIsViewAllHovered(true)}
             onMouseLeave={() => setIsViewAllHovered(false)}
           >
@@ -60,10 +59,10 @@ export const SelectedWorks: React.FC<SelectedWorksProps> = ({
               }}
             />
             <a
-              href="https://github.com/Sohail07x"
+              href={USER_INFO.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="relative z-10 rounded-full text-xs sm:text-sm font-medium px-5 py-2.5 bg-surface text-text-primary border border-stroke hover:border-transparent flex items-center gap-2 transition-all duration-300 cursor-pointer"
+              className="relative z-10 rounded-full text-xs sm:text-sm font-medium px-4 sm:px-5 py-2.5 bg-surface text-text-primary border border-stroke hover:border-transparent flex items-center gap-2 transition-all duration-300 cursor-pointer"
             >
               <span>GitHub Repositories</span>
               <span>→</span>
@@ -81,11 +80,11 @@ export const SelectedWorks: React.FC<SelectedWorksProps> = ({
               viewport={{ once: true, margin: '-60px' }}
               transition={{
                 duration: 0.8,
-                delay: index * 0.12,
+                delay: index * 0.1,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
               onClick={() => onSelectProject(project)}
-              className={`group relative overflow-hidden bg-surface border border-stroke rounded-3xl cursor-pointer ${project.colSpan} ${project.aspect} min-h-[360px] md:min-h-[460px]`}
+              className={`group relative overflow-hidden bg-surface border border-stroke rounded-3xl cursor-pointer ${project.colSpan} ${project.aspect} min-h-[340px] sm:min-h-[400px] md:min-h-[460px] active:scale-[0.99] transition-transform`}
             >
               {/* Background image */}
               <img
@@ -105,16 +104,16 @@ export const SelectedWorks: React.FC<SelectedWorksProps> = ({
                 }}
               />
 
-              {/* Bottom gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-bg/95 via-bg/30 to-transparent pointer-events-none transition-opacity duration-300 group-hover:opacity-30" />
+              {/* Bottom gradient scrim (ensures readability on all viewports) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent pointer-events-none transition-opacity duration-300 group-hover:opacity-40" />
 
-              {/* Default Card Bottom Info */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex items-end justify-between pointer-events-none transition-opacity duration-300 group-hover:opacity-0">
-                <div>
-                  <div className="text-[11px] uppercase tracking-widest text-muted mb-1 font-mono">
+              {/* Default Card Bottom Info (Always visible on mobile & tablet; hidden on desktop hover) */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 md:p-8 flex items-end justify-between pointer-events-none transition-opacity duration-300 md:group-hover:opacity-0">
+                <div className="max-w-md">
+                  <div className="text-[10px] sm:text-[11px] uppercase tracking-widest text-muted mb-1 font-mono">
                     {project.category} · {project.year}
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-display italic text-text-primary">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-display italic text-text-primary leading-tight">
                     {project.title}
                   </h3>
                   {project.statusNote && (
@@ -122,14 +121,20 @@ export const SelectedWorks: React.FC<SelectedWorksProps> = ({
                       {project.statusNote}
                     </span>
                   )}
+                  {/* Mobile Tap hint */}
+                  <div className="flex sm:hidden items-center gap-1.5 mt-2 text-[11px] text-text-primary font-mono">
+                    <span>Inspect Architecture</span>
+                    <span>→</span>
+                  </div>
                 </div>
-                <span className="text-xs text-muted/80 font-mono hidden sm:inline-block">
+
+                <span className="text-xs text-muted/90 font-mono hidden sm:inline-block shrink-0 ml-4">
                   {project.metrics}
                 </span>
               </div>
 
-              {/* Hover overlay with animated gradient pill */}
-              <div className="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-md transition-all duration-400 flex flex-col items-center justify-center p-6 text-center">
+              {/* Desktop Hover overlay with animated gradient pill */}
+              <div className="hidden md:flex absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-md transition-all duration-400 flex-col items-center justify-center p-6 text-center">
                 <div className="relative p-[1.5px] rounded-full animate-gradient-shift accent-gradient shadow-2xl transition-transform duration-300 group-hover:scale-105">
                   <div className="px-6 py-2.5 bg-white text-black rounded-full flex items-center gap-2 shadow-lg">
                     <span className="text-xs sm:text-sm font-semibold tracking-wide uppercase">

@@ -23,7 +23,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       const elapsed = timestamp - startTimestamp;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Smooth easing for counting
       const currentCount = Math.floor(progress * 100);
       setCount(currentCount);
 
@@ -31,7 +30,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         animationFrameId = requestAnimationFrame(step);
       } else {
         setCount(100);
-        // 400ms delay then call onComplete
         const exitTimer = setTimeout(() => {
           setIsExiting(true);
           const finishTimer = setTimeout(() => {
@@ -50,7 +48,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     };
   }, [onComplete]);
 
-  // Word cycler every 900ms (matches 2700ms total / 3 words)
+  // Word cycler every 900ms
   useEffect(() => {
     const wordInterval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % WORDS.length);
@@ -64,7 +62,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       initial={{ opacity: 1 }}
       animate={{ opacity: isExiting ? 0 : 1 }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-      className="fixed inset-0 z-[9999] bg-bg flex flex-col justify-between p-6 sm:p-10 md:p-16 select-none pointer-events-auto"
+      className="fixed inset-0 z-[9999] bg-bg flex flex-col justify-between p-5 sm:p-10 md:p-16 select-none pointer-events-auto"
     >
       {/* Top-left: "Portfolio" label */}
       <div className="flex items-center justify-between w-full">
@@ -72,18 +70,18 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="text-xs text-muted uppercase tracking-[0.3em] font-medium"
+          className="text-[11px] sm:text-xs text-muted uppercase tracking-[0.3em] font-medium"
         >
           Portfolio
         </motion.span>
-        <span className="text-xs text-muted/50 font-mono tracking-widest hidden sm:inline-block">
-          2026 ARCHIVE
+        <span className="text-[10px] sm:text-xs text-muted/60 font-mono tracking-widest">
+          MAHAMMAD SOHAIL
         </span>
       </div>
 
-      {/* Center: Rotating words ["Design", "Create", "Inspire"] */}
-      <div className="flex items-center justify-center my-auto overflow-hidden py-12">
-        <div className="relative h-20 sm:h-28 flex items-center justify-center">
+      {/* Center: Rotating words */}
+      <div className="flex items-center justify-center my-auto overflow-hidden py-8 sm:py-12">
+        <div className="relative h-16 sm:h-24 md:h-28 flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={wordIndex}
@@ -91,7 +89,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               animate={{ opacity: 0.85, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl md:text-6xl lg:text-7xl font-display italic text-text-primary/80 whitespace-nowrap"
+              className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display italic text-text-primary/80 whitespace-nowrap"
             >
               {WORDS[wordIndex]}
             </motion.div>
@@ -101,8 +99,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
       {/* Bottom section: Counter display & Progress bar */}
       <div className="w-full">
-        <div className="flex justify-end items-baseline mb-4">
-          <div className="text-6xl md:text-8xl lg:text-9xl font-display text-text-primary tabular-nums tracking-tight">
+        <div className="flex justify-end items-baseline mb-3 sm:mb-4">
+          <div className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display text-text-primary tabular-nums tracking-tight">
             {String(count).padStart(3, '0')}
           </div>
         </div>

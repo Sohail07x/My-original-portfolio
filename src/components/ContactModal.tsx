@@ -13,7 +13,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: 'Internship / Collaboration Inquiry',
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
@@ -57,7 +56,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 md:p-10">
+      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-3 sm:p-6 md:p-10">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -71,21 +70,21 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto bg-surface border border-stroke rounded-3xl shadow-2xl p-6 sm:p-10"
+          className="relative z-10 w-full max-w-xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto bg-surface border border-stroke rounded-2xl sm:rounded-3xl shadow-2xl p-5 sm:p-8 md:p-10"
         >
-          {/* Header */}
-          <div className="flex items-start justify-between pb-6 border-b border-stroke/60 mb-6">
+          {/* Sticky Header */}
+          <div className="sticky top-0 z-20 -mt-2 -mx-2 px-2 py-2 bg-surface/95 backdrop-blur-md flex items-start justify-between pb-4 border-b border-stroke/60 mb-5 sm:mb-6">
             <div>
-              <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted mb-2">
+              <div className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-muted mb-1">
                 Connect & Collaborate
               </div>
-              <h2 className="text-3xl sm:text-4xl font-display italic text-text-primary">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display italic text-text-primary leading-tight">
                 Contact Mahammad
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 rounded-full bg-bg border border-stroke hover:border-white/40 flex items-center justify-center text-text-primary hover:text-white transition-colors cursor-pointer"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-bg border border-stroke hover:border-white/40 flex items-center justify-center text-text-primary hover:text-white transition-colors cursor-pointer shrink-0"
               aria-label="Close modal"
             >
               ✕
@@ -93,7 +92,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           </div>
 
           {/* Quick contact cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 sm:mb-6">
             {/* Email Card */}
             <div className="p-3.5 rounded-2xl bg-bg border border-stroke flex flex-col justify-between">
               <div>
@@ -141,11 +140,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
           {/* Message Form */}
           {submitted ? (
-            <div className="py-10 text-center">
+            <div className="py-8 sm:py-10 text-center">
               <div className="w-12 h-12 rounded-full accent-gradient mx-auto flex items-center justify-center text-white text-xl mb-4">
                 ✓
               </div>
-              <h3 className="text-2xl font-display italic text-text-primary mb-2">
+              <h3 className="text-xl sm:text-2xl font-display italic text-text-primary mb-2">
                 Message Dispatched
               </h3>
               <p className="text-xs text-muted max-w-xs mx-auto">
@@ -153,25 +152,25 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3.5 sm:gap-4">
               <div>
-                <label className="block text-xs font-mono text-muted mb-1.5">
+                <label className="block text-xs font-mono text-muted mb-1">
                   Your Name
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Recruiter / Collaborator"
+                  placeholder="e.g. Recruiter / Engineer"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full bg-bg border border-stroke rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-muted/40 focus:outline-none focus:border-white/40 transition-colors"
+                  className="w-full bg-bg border border-stroke rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-text-primary placeholder:text-muted/40 focus:outline-none focus:border-white/40 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-muted mb-1.5">
+                <label className="block text-xs font-mono text-muted mb-1">
                   Your Email
                 </label>
                 <input
@@ -182,12 +181,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full bg-bg border border-stroke rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-muted/40 focus:outline-none focus:border-white/40 transition-colors"
+                  className="w-full bg-bg border border-stroke rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-text-primary placeholder:text-muted/40 focus:outline-none focus:border-white/40 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-muted mb-1.5">
+                <label className="block text-xs font-mono text-muted mb-1">
                   Inquiry Details
                 </label>
                 <textarea
@@ -198,17 +197,17 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full bg-bg border border-stroke rounded-xl px-4 py-2.5 text-sm text-text-primary placeholder:text-muted/40 focus:outline-none focus:border-white/40 transition-colors resize-none"
+                  className="w-full bg-bg border border-stroke rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-text-primary placeholder:text-muted/40 focus:outline-none focus:border-white/40 transition-colors resize-none"
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-3">
-                <span className="text-[11px] text-muted font-mono">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
+                <span className="text-[11px] text-muted font-mono text-center sm:text-left">
                   Direct Response Guarantee
                 </span>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-full text-xs font-medium bg-text-primary text-bg hover:opacity-90 transition-opacity cursor-pointer"
+                  className="px-6 py-2.5 rounded-full text-xs font-medium bg-text-primary text-bg hover:opacity-90 transition-opacity cursor-pointer text-center"
                 >
                   Send Inquiry →
                 </button>
