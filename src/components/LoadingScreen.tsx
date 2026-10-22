@@ -82,11 +82,17 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="text-[11px] sm:text-xs text-muted uppercase tracking-[0.3em] font-medium"
         >
-          Portfolio
+          Portfolio · Mahammad Sohail
         </motion.span>
-        <span className="text-[10px] sm:text-xs text-muted/60 font-mono tracking-widest">
-          MAHAMMAD SOHAIL
-        </span>
+        <button
+          onClick={() => {
+            setIsExiting(true);
+            setTimeout(onComplete, 200);
+          }}
+          className="text-[11px] sm:text-xs text-muted hover:text-white font-mono px-3 py-1 rounded-full border border-stroke/60 hover:border-white/40 transition-colors cursor-pointer"
+        >
+          Skip Intro →
+        </button>
       </div>
 
       {/* Center: Rotating words */}
